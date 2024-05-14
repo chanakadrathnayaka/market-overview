@@ -1,20 +1,12 @@
 import * as http from "http";
 import {RequestOptions} from "http";
-
-var url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&=demo';
+import {AVFunction, AVRequestOptions} from "./alphaVantage.config";
 
 const defaultOptions: RequestOptions = {
   headers: {
     'Content-Type': 'application/json',
   },
 };
-
-interface AVRequestOptions {
-  outputsize?: 'compact' | 'full';
-  interval?: '1min' | '5min' | '15min' | '30min' | '60min';
-}
-
-type AVFunction = 'TIME_SERIES_INTRADAY';
 
 const request = (fn: AVFunction, symbol: string, requestOptions: RequestOptions, queryOptions?: AVRequestOptions) => {
   const queryString = getQueryString({
@@ -42,7 +34,7 @@ const request = (fn: AVFunction, symbol: string, requestOptions: RequestOptions,
   });
 };
 
-const getQueryString = (queryParams: { [key: string]: string | number | undefined }) => {
+const getQueryString = (queryParams: { [key: string]: unknown }) => {
   let queryString = '';
   let joiner = '';
   for (const queryParamsKey in queryParams) {
