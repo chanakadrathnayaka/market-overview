@@ -6,9 +6,12 @@ import logger from 'morgan';
 import livereload from 'livereload';
 import connectLiveReload from 'connect-livereload';
 import dotenv from 'dotenv';
+import {FinnHub} from "./src/configs/finnhub.config";
 
 import indexRouter from './src/routes';
-import usersRouter from './src/routes/users';
+import {usersRouter} from './src/routes/users.router';
+import {symbolRouter} from "./src/routes/symbol.router";
+import {exchangeRouter} from "./src/routes/exchange.router";
 
 dotenv.config();
 
@@ -36,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/stocks', symbolRouter);
+app.use('/exchange', exchangeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
@@ -53,4 +58,5 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   res.render('error');
 });
 
+FinnHub.register();
 module.exports = app;
