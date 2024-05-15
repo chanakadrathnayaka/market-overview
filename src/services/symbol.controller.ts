@@ -9,6 +9,17 @@ const quote = (req: Request, res: Response) => {
   });
 };
 
+const search = (req: Request, res: Response) => {
+  const symbol: string = req.query.symbol as string;
+  if (symbol) {
+    FinnHub.getClient().symbolSearch(symbol, (error: any, data: any, response: any) => {
+      res.send(data);
+    });
+  } else {
+    res.status(400).contentType('application/json').send('Invalid symbol');
+  }
+};
+
 const intraday = (req: Request, res: Response) => {
   const interval: AVInterval = req.query.interval as AVInterval;
 
@@ -18,4 +29,4 @@ const intraday = (req: Request, res: Response) => {
       .send(data)
   ).catch(error => res.status(500).send(error))
 };
-export const SymbolController = {quote, intraday};
+export const SymbolController = {quote, search, intraday};

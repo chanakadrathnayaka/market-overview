@@ -4,6 +4,8 @@ declare module 'finnhub' {
   class DefaultApi {
     quote(symbol: string, callback: CallBack);
 
+    symbolSearch(symbol: string, callback: CallBack);
+
     marketStatus(exchange: string, callback: CallBack);
   }
 }
