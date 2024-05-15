@@ -1,5 +1,5 @@
 import express, {Router} from 'express';
-import {SymbolController} from "../services/symbol.controller";
+import {SymbolController} from "../controllers/symbol.controller";
 
 const router: Router = express.Router();
 

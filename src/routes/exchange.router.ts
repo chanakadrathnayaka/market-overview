@@ -1,5 +1,5 @@
 import express, {Router} from 'express';
-import {ExchangeController} from "../services/exchange.controller";
+import {ExchangeController} from "../controllers/exchange.controller";
 
 const router: Router = express.Router();
 
