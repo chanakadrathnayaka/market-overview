@@ -24,7 +24,13 @@ const request = (fn: AVFunction, symbol: string, requestOptions: RequestOptions,
         data += chunk;
       });
 
-      response.on('end', () => resolve(data));
+      response.on('end', () => {
+        if (data.toString().includes('Thank you for using Alpha Vantage')) {
+          reject(data);
+        } else {
+          resolve(data);
+        }
+      });
     });
 
     request.on('error', (error: Error) => reject(error));
