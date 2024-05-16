@@ -1,4 +1,4 @@
-import * as http from "http";
+import * as https from "https";
 import {RequestOptions} from "http";
 import {AVFunction, AVRequestOptions} from "./alphaVantage.config";
 
@@ -18,8 +18,7 @@ const request = (fn: AVFunction, symbol: string, requestOptions: RequestOptions,
 
   return new Promise((resolve, reject) => {
     let data = '';
-    // `https://www.alphavantage.co/query?${queryString}`
-    const request = http.request('http://localhost:3032/intraday', requestOptions, (response) => {
+    const request = https.request(`https://www.alphavantage.co/query?${queryString}`, requestOptions, (response) => {
       response.setEncoding('utf8');
       response.on('data', (chunk) => {
         data += chunk;
@@ -38,8 +37,10 @@ const getQueryString = (queryParams: { [key: string]: unknown }) => {
   let queryString = '';
   let joiner = '';
   for (const queryParamsKey in queryParams) {
-    queryString += `${joiner}${queryParamsKey}=${queryParams[queryParamsKey]}`;
-    joiner = '&';
+    if (queryParamsKey && queryParams[queryParamsKey] !== undefined) {
+      queryString += `${joiner}${queryParamsKey}=${queryParams[queryParamsKey]}`;
+      joiner = '&';
+    }
   }
 
   return queryString;

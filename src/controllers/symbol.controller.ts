@@ -1,7 +1,7 @@
 import {FinnHub} from "../configs/finnhub.config";
 import {Request, Response} from "express";
 import {AlphaAdvantageClient} from "../configs/alphaVantage.client";
-import {AVInterval} from "../configs/alphaVantage.config";
+import {AVInterval, AVOutputSize} from "../configs/alphaVantage.config";
 
 const quote = (req: Request, res: Response) => {
   FinnHub.getClient().quote(req.params.symbol, (error: any, data: any, response: any) => {
@@ -22,8 +22,9 @@ const search = (req: Request, res: Response) => {
 
 const intraday = (req: Request, res: Response) => {
   const interval: AVInterval = req.query.interval as AVInterval;
+  const size: AVOutputSize = req.query.size as AVOutputSize;
 
-  AlphaAdvantageClient.get('TIME_SERIES_INTRADAY', req.params.symbol, {interval})
+  AlphaAdvantageClient.get('TIME_SERIES_INTRADAY', req.params.symbol, {interval, outputsize: size})
   .then(data => res
       .contentType('application/json')
       .send(data)
