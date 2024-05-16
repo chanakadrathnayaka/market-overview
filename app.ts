@@ -1,4 +1,5 @@
 import createError from 'http-errors';
+import cors from 'cors';
 import express, {Express, NextFunction, Request, Response} from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -8,11 +9,10 @@ import connectLiveReload from 'connect-livereload';
 import dotenv from 'dotenv';
 import {FinnHub} from "./src/configs/finnhub.config";
 
-import indexRouter from './src/routes';
+import indexRouter from './src/routes/index.router';
 import {usersRouter} from './src/routes/users.router';
 import {symbolRouter} from "./src/routes/symbol.router";
 import {exchangeRouter} from "./src/routes/exchange.router";
-import {TradeWS} from "./src/wsserver/trade.controller";
 
 dotenv.config();
 
@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
     }, 100);
   });
   app.use(connectLiveReload());
+  app.use(cors());
 }
 app.use(logger('dev'));
 app.use(express.json());
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/stocks', symbolRouter);
+app.use('/symbol', symbolRouter);
 app.use('/exchange', exchangeRouter);
 
 // catch 404 and forward to error handler
@@ -60,6 +61,6 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 });
 
 FinnHub.register();
-TradeWS.register();
+// TradeWS.register();
 
 module.exports = app;
