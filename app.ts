@@ -13,6 +13,7 @@ import indexRouter from './src/routes/index.router';
 import {usersRouter} from './src/routes/users.router';
 import {symbolRouter} from "./src/routes/symbol.router";
 import {exchangeRouter} from "./src/routes/exchange.router";
+import {TradeWS} from "./src/wsserver/trade.wss";
 
 dotenv.config();
 
@@ -61,6 +62,6 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 });
 
 FinnHub.register();
-// TradeWS.register();
+TradeWS.register();
 
 module.exports = app;
