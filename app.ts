@@ -13,11 +13,12 @@ import indexRouter from './src/routes/index.router';
 import {usersRouter} from './src/routes/users.router';
 import {symbolRouter} from "./src/routes/symbol.router";
 import {exchangeRouter} from "./src/routes/exchange.router";
-import {TradeWS} from "./src/wsserver/trade.wss";
+import * as mongoose from "mongoose";
 
 dotenv.config();
 
 const app: Express = express();
+const mongoDBUri = process.env.MONGO_DB_URI;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'src', 'views'));
@@ -41,9 +42,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/symbol', symbolRouter);
 app.use('/exchange', exchangeRouter);
+
+mongoose.connect(mongoDBUri!)
+.then(() => {
+  console.log("MongoDB database connection established successfully");
+})
+.catch((err: any) => {
+  console.error(err);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {

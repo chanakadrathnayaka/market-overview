@@ -1,10 +1,10 @@
-import express, {NextFunction, Request, Response, Router} from 'express';
+import express, {Router} from 'express';
+import {UserController} from "../controllers/user.controller";
 
 const router: Router = express.Router();
 
-/* GET users listing. */
-router.get('/', function (req: Request, res: Response, next: NextFunction) {
-  res.send('respond with a resource');
-});
+router.post('/login', UserController.getValidUserByEmail);
+router.post('/profile', UserController.createUser);
+router.put('/profile', UserController.updateUserByEmail);
 
 export const usersRouter = router;
