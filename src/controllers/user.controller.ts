@@ -52,12 +52,10 @@ const updateUserByEmail = async (req: Request, res: Response) => {
     if (email && existingUser.email !== email) {
       existingUser.email = email;
     }
-    if (password && existingUser.password !== password) {
-      existingUser.password = password;
+    if (password && existingUser.password !== encryptPassword(password)) {
+      existingUser.password = encryptPassword(password);
     }
-    if (password && existingUser.password !== password) {
-      existingUser.password = password;
-    }
+
     if (preferences && existingUser.preferences !== preferences) {
       existingUser.preferences = preferences;
     }
