@@ -1,4 +1,3 @@
-import createError from 'http-errors';
 import cors from 'cors';
 import express, {Express, NextFunction, Request, Response} from 'express';
 import path from 'path';
@@ -54,9 +53,9 @@ mongoose.connect(mongoDBUri!)
   console.error(err);
 });
 
-// catch 404 and forward to error handler
+// catch 404 and forward to home page
 app.use(function (req: Request, res: Response, next: NextFunction) {
-  next(createError(404));
+  res.redirect('/')
 });
 
 // error handler
