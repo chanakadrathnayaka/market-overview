@@ -23,7 +23,7 @@ const createUser = async (req: Request, res: Response) => {
 
   const user = new UserModel({
 
-    firstName, lastName, email, password: encryptPassword(req.body.password)
+    firstName, lastName, email, password: encryptPassword(password)
   });
   try {
     const newUser = await user.save();
