@@ -7,7 +7,7 @@ const getValidUserByEmail = async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findOne({email: req.body.email});
     if (!user) {
-      res.status(401).send({message: 'Your email is wrong'});
+      res.status(401).send({message: 'Your email is wrong or user does not exist'});
     } else if (user.password === encryptPassword(req.body.password)) {
       res.status(200).send(await getSanitizedUser(user._id));
     } else {
