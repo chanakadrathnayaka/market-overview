@@ -13,6 +13,7 @@ import {usersRouter} from './src/routes/users.router';
 import {symbolRouter} from "./src/routes/symbol.router";
 import {exchangeRouter} from "./src/routes/exchange.router";
 import * as mongoose from "mongoose";
+import {TradeWS} from "./src/wsserver/trade.wss";
 
 dotenv.config();
 
