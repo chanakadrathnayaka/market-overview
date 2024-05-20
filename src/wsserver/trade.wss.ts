@@ -3,7 +3,7 @@ import WebSocket, {WebSocketServer} from 'ws';
 const clientMap = new Map<string, Set<WebSocket.WebSocket>>();
 
 const register = () => {
-  const wss = new WebSocketServer({port: 3001, path: '/trades'});
+  const wss = new WebSocketServer({port: +(process.env.WS_PORT || 3001), path: '/trades'});
   const finnHubWebSocket = new WebSocket(`wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY}`);
 
   wss.on('connection', (ws: WebSocket.WebSocket) => {
