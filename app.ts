@@ -7,22 +7,20 @@ import livereload from 'livereload';
 import connectLiveReload from 'connect-livereload';
 import dotenv from 'dotenv';
 import {FinnHub} from "./src/configs/finnhub.config";
-
 import indexRouter from './src/routes/index.router';
 import {usersRouter} from './src/routes/users.router';
 import {symbolRouter} from "./src/routes/symbol.router";
 import {exchangeRouter} from "./src/routes/exchange.router";
 import * as mongoose from "mongoose";
 import {TradeWS} from "./src/wsserver/trade.wss";
+import swaggerUi from 'swagger-ui-express';
+// @ts-ignore This is an auto generated file
+import swaggerDocument from './docs/swagger.json';
 
 dotenv.config();
 
 const app: Express = express();
 const mongoDBUri = process.env.MONGO_DB_URI;
-
-// view engine setup
-app.set('views', path.join(__dirname, 'src', 'views'));
-app.set('view engine', 'pug');
 
 // live reload
 if (process.env.NODE_ENV === 'development') {
@@ -45,6 +43,9 @@ app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/symbol', symbolRouter);
 app.use('/exchange', exchangeRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  explorer: true
+}));
 
 mongoose.connect(mongoDBUri!)
 .then(() => {
