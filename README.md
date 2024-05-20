@@ -38,8 +38,6 @@ Restriction: 25 API calls per day.
 
 ## Further development
 
-1. Proper unit tests are not implemented yet,
-   due to time constraint and will be implemented soon
-2. Redis Caching storages will be included to improve
+1. Redis Caching storages will be included to improve
    user convenience (The inconvenience causes by the number of API request restrictions)
-3. OAuth2 login will be implemented (Google)
+2. OAuth2 login will be implemented (Google)
