@@ -6,9 +6,6 @@ const register = () => {
   const wss = new WebSocketServer({port: 3001, path: '/trades'});
   const finnHubWebSocket = new WebSocket(`wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY}`);
 
-  setInterval(() => {
-    console.log(clientMap.size)
-  }, 2000)
   wss.on('connection', (ws: WebSocket.WebSocket) => {
     ws.on('message', (data) => {
       setImmediate(addClient.bind(null, ws, finnHubWebSocket, data.toString()));
