@@ -3,8 +3,6 @@ import {FinnHub} from "../configs/finnhub.config";
 
 const marketStatus = (req: Request, res: Response) => {
   FinnHub.getClient().marketStatus(req.params.market, (error: any, data: any, response: any) => {
-    console.log(data);
-    console.error(error);
     res.send(data);
   });
 };

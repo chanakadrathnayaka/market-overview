@@ -68,8 +68,15 @@ const updateUserByEmail = async (req: Request, res: Response) => {
 };
 
 const getSanitizedUser = async (id: Types.ObjectId) => {
-  return UserModel
-  .findById(id).select('-_id -__v -password').lean();
+  try {
+    const query = UserModel
+    .findById(id).select('-_id -__v -password');
+    return query.lean();
+  } catch (e) {
+    console.log(e);
+    // @ts-ignore
+    throw new Error(e);
+  }
 }
 
 const encryptPassword = (password: string) => {
