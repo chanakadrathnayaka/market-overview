@@ -36,6 +36,12 @@ Restriction: 25 API calls per day.
 
 1. `/symbol/intraday/{symbol}`
 
+## Deployment
+
+This application is a part
+of [market-overview-app](https://github.com/chanakadrathnayaka/market-overview-app)
+, and it is deployed part of the main application
+
 ## Further development
 
 1. Redis Caching storages will be included to improve
